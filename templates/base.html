@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Flask App{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    <!-- ✅ Navbar -->
+    <nav class="bg-white shadow-md p-4 flex justify-between items-center">
+        <a href="{{ url_for('dashboard') }}" class="text-blue-600 text-lg font-bold">Dashboard</a>
+        <div>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('profile') }}" class="px-4 py-2 text-gray-700 hover:text-blue-600">Profile</a>
+                <a href="{{ url_for('logout') }}" class="px-4 py-2 bg-red-500 text-white rounded">Logout</a>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="px-4 py-2 bg-blue-500 text-white rounded">Login</a>
+                <a href="{{ url_for('register') }}" class="px-4 py-2 bg-green-500 text-white rounded">Sign Up</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- ✅ Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% if messages %}
+    <div class="max-w-4xl mx-auto mt-4">
+        {% for category, message in messages %}
+        <div class="p-3 text-white rounded-lg {% if category == 'success' %}bg-green-500{% else %}bg-red-500{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+
+    <!-- ✅ Main Content -->
+    <div class="max-w-6xl mx-auto mt-8 p-6 bg-white shadow-lg rounded-lg">
+        {% block content %}{% endblock %}
+    </div>
+
+    <!-- ✅ Footer -->
+    <footer class="text-center text-gray-600 mt-8 py-4">
+        &copy; 2025 Flask App | All Rights Reserved
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uploaded Files</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex flex-col items-center py-10">
+
+    <h2 class="text-3xl font-bold mb-6">Uploaded Files</h2>
+
+    <div class="bg-white shadow-lg rounded-lg p-6 w-3/4">
+        <ul class="space-y-2">
+            {% for file in files %}
+                <li class="flex justify-between bg-gray-200 p-2 rounded-lg">
+                    <span class="text-lg">{{ file }}</span>
+                    <a href="{{ url_for('download_file', filename=file) }}" class="text-blue-500 hover:underline">Download</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="{{ url_for('upload_file') }}" class="block text-center mt-4 text-blue-500 hover:underline">Upload More Files</a>
+    </div>
+
+</body>
+</html>

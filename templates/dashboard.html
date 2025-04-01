@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto mt-10 bg-white shadow-lg rounded-lg p-6">
+    <h2 class="text-xl font-bold text-center">User Dashboard</h2>
+    <p class="text-center text-gray-600">Welcome, {{ username }}</p>
+
+    <div class="flex justify-center gap-4 mt-4">
+        <a href="{{ url_for('profile') }}" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Update Profile</a>
+        <a href="{{ url_for('reset_password') }}" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">Reset Password</a>
+    </div>
+
+    <!-- Display User Grades -->
+    <div class="mb-6">
+        <h3 class="font-semibold text-lg text-gray-700">Your Grades</h3>
+        <table class="w-full border border-gray-200 rounded-lg shadow-md mt-4">
+            <thead class="bg-blue-500 text-white">
+                <tr>
+                    <th class="px-4 py-3">Subject</th>
+                    <th class="px-4 py-3">Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for subject, grade in grades.items() %}
+                <tr class="border-t border-gray-200">
+                    <td class="px-4 py-3">{{ subject }}</td>
+                    <td class="px-4 py-3 text-center text-blue-600 font-bold">{{ grade }}</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="2" class="text-center text-gray-500 p-4">No grades available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Form to Modify Grades -->
+    <div class="mt-6">
+        <h3 class="font-semibold text-lg text-gray-700">Modify Your Grades</h3>
+        <form method="POST" action="{{ url_for('update_grades') }}" class="mt-4">
+            <div class="grid grid-cols-2 gap-4">
+                <input type="text" name="subject" placeholder="Subject" class="px-3 py-2 border rounded-lg w-full" required>
+                <input type="text" name="grade" placeholder="Grade" class="px-3 py-2 border rounded-lg w-full" required>
+            </div>
+            <button type="submit" class="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-blue-600">
+                Update Grade
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}
